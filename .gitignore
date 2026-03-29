@@ -1,0 +1,16 @@
+```
+# Obsidian
+.obsidian/
+.trash/
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Secrets (if any config snippets contain sensitive data)
+secrets/
+*.secret.md

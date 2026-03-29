@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HA Button Automation Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        h1 {
+            color: #41b3ff;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #41b3ff;
+        }
+        button {
+            background: #41b3ff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #2d9be8;
+        }
+        button.copy-btn {
+            background: #28a745;
+        }
+        button.copy-btn:hover {
+            background: #218838;
+        }
+        .output {
+            margin-top: 30px;
+            display: none;
+        }
+        .output.show {
+            display: block;
+        }
+        pre {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .button-group {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Home Assistant Button Automation Generator</h1>
+    
+    <div class="input-group">
+        <label for="buttonName">Button Name (optional):</label>
+        <input type="text" id="buttonName" placeholder="Kitchen shelves button">
+    </div>
+    
+    <div class="input-group">
+        <label for="deviceId">Device ID:</label>
+        <input type="text" id="deviceId" placeholder="de9cf92aac6292fd20f56e2cdc9a9ae4">
+    </div>
+    
+    <div class="button-group">
+        <button onclick="generateYAML()">Generate YAML</button>
+    </div>
+    
+    <div class="output" id="output">
+        <h2>Generated Automation:</h2>
+        <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+        <pre id="yamlOutput"></pre>
+    </div>
+
+    <script>
+        function generateYAML() {
+            const buttonName = document.getElementById('buttonName').value || 'Button';
+            const deviceId = document.getElementById('deviceId').value.trim();
+            
+            if (!deviceId) {
+                alert('Please enter a device ID');
+                return;
+            }
+            
+            const yaml = `alias: ${buttonName}
+description: ""
+triggers:
+  - alias: Single press
+    domain: mqtt
+    device_id: ${deviceId}
+    type: action
+    subtype: single
+    trigger: device
+    id: Single press
+  - alias: Double press
+    domain: mqtt
+    device_id: ${deviceId}
+    type: action
+    subtype: double
+    trigger: device
+    id: Double press
+  - alias: Long press
+    domain: mqtt
+    device_id: ${deviceId}
+    type: action
+    subtype: hold
+    trigger: device
+    id: Long press
+  - alias: Release after long press
+    domain: mqtt
+    device_id: ${deviceId}
+    type: action
+    subtype: release
+    trigger: device
+    id: Release after long press
+
+conditions: []
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: Single press
+        sequence: []
+      - conditions:
+          - condition: trigger
+            id: Double press
+        sequence: []
+      - conditions:
+          - condition: trigger
+            id: Long press
+        sequence: []
+      - conditions:
+          - condition: trigger
+            id: Release after long press
+        sequence: []
+
+mode: single`;
+            
+            document.getElementById('yamlOutput').textContent = yaml;
+            document.getElementById('output').classList.add('show');
+        }
+        
+        function copyToClipboard() {
+            const yamlText = document.getElementById('yamlOutput').textContent;
+            navigator.clipboard.writeText(yamlText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Allow Enter key to generate
+        document.getElementById('deviceId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateYAML();
+            }
+        });
+    </script>
+</body>
+</html>
