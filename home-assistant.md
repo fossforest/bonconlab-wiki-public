@@ -53,6 +53,15 @@ All add-ons (Zigbee2MQTT, File Editor) and integrations (Broadlink, Z2M) migrate
 |--------|---------|--------|
 | Zigbee2MQTT | Zigbee device management | ✅ Active |
 | File Editor | Edit config files in browser | ✅ Active |
+| go2rtc | Camera stream handling | ✅ Active |
+
+## Detailed Documentation
+ 
+| Topic | Description |
+|-------|-------------|
+| [go2rtc](home-assistant/go2rtc.md) | Camera stream handling, rotation, RTSP proxy |
+| [Cameras](home-assistant/cameras.md) | Camera entities, dashboard cards, hardware |
+| [Zigbee2MQTT](home-assistant/zigbee2mqtt.md) | Zigbee device management via MQTT |
 
 ## Integrations
 
