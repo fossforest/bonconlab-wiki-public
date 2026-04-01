@@ -4,6 +4,39 @@ Running log of changes, configurations, and decisions for BonConLab.
 
 ## **March 2026**
 
+### 2026-03-31
+
+**go2rtc Camera Stream Setup**
+
+Deployed go2rtc add-on in Home Assistant to handle camera streams with rotation support for sideways-mounted doorbell.
+
+**Problem Solved**:
+- Reolink doorbell has 180° horizontal FoV, designed for landscape orientation
+- Mounted sideways to get vertical head-to-toe coverage of visitors
+- Reolink app only offers flip/mirror, not 90° rotation
+- Solution: go2rtc add-on with FFmpeg transpose filter
+
+**go2rtc Configuration**:
+- Installed default go2rtc add-on (AlexxIT repository, includes Intel VAAPI)
+- Doorbell stream: RTSP ingested, rotated 90° CW via FFmpeg, served as `doorbell_rotated`
+- Driveway stream: RTSP passthrough (no processing), served as `driveway`
+- Web UI at `http://homeassistant.local:1984`
+
+**Home Assistant Integration**:
+- Added cameras via Generic Camera integration (UI method, not YAML)
+- Stream source: `rtsp://127.0.0.1:8554/{stream_name}`
+- Still image: `http://127.0.0.1:1984/api/frame.jpeg?src={stream_name}`
+- Entities: `camera.doorbell`, `camera.driveway`
+
+**Prusa Buddy3D Camera**: Not integrated — requires WebRTC mode for PrusaConnect app/web, which go2rtc can't easily ingest. Monitoring via PrusaConnect only.
+
+**Documentation**:
+- Created `home-assistant/` subfolder for HA-specific documentation
+- Added [go2rtc](home-assistant/go2rtc.md) — stream configuration and rotation
+- Added [cameras](home-assistant/cameras.md) — camera entities and dashboard setup
+- Moved Zigbee2MQTT documentation from `services/` to `home-assistant/`
+- Updated services index to reflect Zigbee2MQTT move
+
 ### **2026-03-29**
  
 **NAS/Fileshare Documentation Complete**
