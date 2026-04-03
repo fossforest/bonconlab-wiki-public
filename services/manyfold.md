@@ -29,6 +29,46 @@ Tailscale serve (HTTPS) → nginx :80 → Puma :5000
 
 nginx config: `/etc/nginx/sites-available/manyfold.conf`
 
+> **Note**: Because Tailscale serve connects to nginx over plain HTTP, nginx sees `$scheme` as `http`. `X-Forwarded-Proto` must be hardcoded to `https` — do not use `$scheme` — so Rails generates correct HTTPS URLs for upload endpoints.
+
+## nginx Configuration
+
+Full working config at `/etc/nginx/sites-available/manyfold.conf`:
+
+```nginx
+server {
+    listen 80;
+    server_name manyfold;
+    root /opt/manyfold/app/public;
+    client_max_body_size 500M;
+
+    location /cable {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location / {
+        try_files $uri/index.html $uri @rails;
+    }
+
+    location @rails {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+}
+```
+
 ## Library Storage
 
 | Path | Location | Notes |
@@ -63,25 +103,31 @@ u.save!
 u.unlock_access!
 ```
 
-### Upload failures via Tailscale URL
+### Upload failures — file too large
 
-nginx's default `client_max_body_size` is 1MB, which blocks large model uploads. Edit the nginx config:
+nginx's default `client_max_body_size` is 1MB, which blocks large model uploads. The config above already includes `client_max_body_size 500M;`. If reverting to a fresh config, make sure this is present in the `server` block.
 
-```bash
-nano /etc/nginx/sites-available/manyfold.conf
-```
-
-Add inside the `server` block:
-
-```nginx
-client_max_body_size 500M;
-```
-
-Reload nginx without downtime:
+Reload nginx after any config change:
 
 ```bash
 nginx -s reload
 ```
+
+### Upload failures — CSP error / http vs https mismatch
+
+**Symptom**: Browser console shows `connect-src 'self'` CSP errors with `http://manyfold.tail-scale.ts.net/upload/...` URLs being blocked.
+
+**Cause**: Tailscale serve connects to nginx over plain HTTP, so nginx sees `$scheme` as `http`. If `X-Forwarded-Proto` is set to `$scheme` (or not set at all), Rails generates `http://` URLs for upload endpoints. The browser blocks these because the page is served over `https://`, violating CSP `connect-src 'self'`.
+
+**Fix**: Hardcode `X-Forwarded-Proto https` in both the `/cable` and `@rails` location blocks. Do **not** use `proxy_set_header X-Forwarded-Proto $scheme` — this will always resolve to `http` in this stack.
+
+After editing, reload nginx:
+
+```bash
+nginx -s reload
+```
+
+If the browser still shows the old behaviour after the fix, test in a private/incognito window — the regular session may have cached the old `http://` upload URL.
 
 ## Related
 
