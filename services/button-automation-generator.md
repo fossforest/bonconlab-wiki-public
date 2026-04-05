@@ -7,7 +7,6 @@ Local HTML tool for quickly generating Home Assistant button automation YAML tem
 | Property | Value |
 |----------|-------|
 | Type | Static HTML page |
-| Hosted On | Nginx Proxy Manager (TMG LXC 101) |
 | URL | http://10.0.0.238/tools/ |
 | File Location | `/var/www/html/tools/index.html` (in container) |
 | Status | ✅ Active |
@@ -149,6 +148,5 @@ nano /var/www/html/tools/index.html
 
 ## Related
 
-- [Nginx Proxy Manager](nginxproxymanager.md)
 - [Home Assistant](../home-assistant.md)
 - [Zigbee2MQTT](zigbee2mqtt.md)

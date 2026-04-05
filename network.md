@@ -27,7 +27,6 @@ Network topology, IP assignments, and device locations for BonConLab.
 | 10.0.0.181 | forgejo | Forgejo Git Server (LXC 104) | TMG |
 | 10.0.0.185 | tmg-it-tools-alpine | IT Tools (LXC 110) | TMG |
 | 10.0.0.229 | — | PiHole Backup (Pi 3) | Homelab closet |
-| 10.0.0.238 | — | Nginx Proxy Manager (LXC 101) | TMG |
 | 10.0.0.250 | — | Unifi Controller (LXC 100) | SB |
 | 10.0.0.161 | db-prowlarr | Prowlarr (LXC 306) | DB |
 | 10.0.0.162 | db-radarr | Radarr (LXC 307) | DB |

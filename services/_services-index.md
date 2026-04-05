@@ -33,7 +33,7 @@ Index of all services running in BonConLab. Each service has its own documentati
 | Radarr | DB (LXC 307) | Container | 7878 | ✅ Active | [Radarr](radarr.md) |
 | Sonarr | DB (LXC 308) | Container | 8989 | ✅ Active | [Sonarr](sonarr.md) |
 | qBittorrent | DB (LXC 309) | Container | 8090 | ✅ Active | [qBittorrent](qbittorrent.md) |
-| NAS / Fileserver | DB | Container | — | ✅ Active | [NAS](nas.md) |
+| NAS / Fileserver | DB | Container | — | ✅ Active | [NAS / Fileshare](nas-fileshare.md) |
 
 ## **Planned Services**
 

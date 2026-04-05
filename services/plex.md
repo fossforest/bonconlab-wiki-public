@@ -9,7 +9,6 @@ Media server for streaming movies and TV. Lifetime Plex Pass owned.
 | Node | DB (db) |
 | LXC | 302 |
 | IP | 10.0.0.194 |
-| Tailscale IP | 100.77.192.67 |
 | Port | 32400 |
 | Storage | db-2tb-nvme (container OS), mergerfs virtual pool (media) |
 | Status | ✅ Active |
@@ -19,7 +18,7 @@ Media server for streaming movies and TV. Lifetime Plex Pass owned.
 | Method | URL |
 |--------|-----|
 | Local | http://10.0.0.194:32400/web |
-| Tailscale | http://100.77.192.67:32400/web |
+| Tailscale (serve) | https://db-plex.tail-scale.ts.net |
 
 ## Storage Architecture
 
@@ -46,4 +45,4 @@ Media is served from a mergerfs virtual pool combining three external drives:
 
 - [Services Index](_services-index.md)
 - [Storage Configuration](../storage.md)
-- [Copyparty](copyparty.md)
+- [Tailscale](tailscale.md)
