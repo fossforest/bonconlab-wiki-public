@@ -2,6 +2,62 @@
 
 Running log of changes, configurations, and decisions for BonConLab.
 
+## **April 2026**
+### 2026-04-05
+
+**BonConLab Dashboard Deployed**
+
+- Deployed custom dashboard on TMG as LXC 114 (10.0.0.123) via `deploy-container` script
+- Stack: Python 3 stdlib http.server + vanilla JS frontend, no dependencies
+- Features: service cards, favorites, quick-launch search, drag-and-drop reorder, dark/light theme
+- Tailscale Serve configured for HTTPS access at https://dashboard.tail-scale.ts.net
+- GitOps webhook configured: push to Forgejo → `http://10.0.0.123:9000/hooks/dashboard-deploy` → pull + restart
+- `config.json` excluded from git (`.gitignore`) to prevent webhook pulls from overwriting live dashboard data
+
+**LXC Deploy Workflow Established**
+
+Created `bonconlab-scripts` repo on Forgejo (not mirrored to GitHub — contains Tailscale OAuth secret) with three provisioning scripts:
+
+- **`deploy-container`**: Runs on the Proxmox host. Creates a Debian 13 LXC from scratch, installs all packages (Node.js, Python, git, curl, Tailscale, webhook), runs `ts-init` and `svc-init`, clones the app repo, and optionally sets up a GitOps webhook. One command to go from nothing to a running service.
+- **`ts-init`**: Runs inside a container. One-command Tailscale setup with SSH using a permanent OAuth client secret. All containers get `tag:server` automatically. Optional `--tags` flag for additional ACL tags.
+- **`svc-init`**: Runs inside a container. Creates a systemd service unit — auto-detects Node.js or Python from repo contents, or prompts interactively.
+
+Scripts are hosted on Forgejo and curled fresh at deploy time, so they always carry the current OAuth secret and latest logic. No LXC template needed.
+
+**Tailscale OAuth Authentication**
+
+- Created an OAuth client for headless node registration (replaces 90-day auth keys)
+- OAuth client secret does not expire — no more key rotation cycle
+- Scopes: `auth_keys` (read/write), `devices:core` (read/write), tag: `tag:server`
+- `ts-init` passes `ephemeral=false&preauthorized=true` to register persistent, auto-approved nodes
+
+**Decisions Made**:
+
+- One container per service maintained — LXC containers share the host kernel and have negligible overhead, while bundling services would create a single point of failure
+- No LXC template — `deploy-container` provisions from scratch each time, eliminating template staleness and maintenance
+- OAuth over auth keys — permanent secret removes the 90-day rotation burden
+- Scripts in Forgejo, not baked into a template — always curled fresh for latest version
+- `bonconlab-scripts` repo NOT mirrored to GitHub — contains Tailscale OAuth client secret
+- Python stdlib for simple utilities (dashboard), Node.js/Express for complex ones (CV Updater, Mirror Manager) — both installed in every container for flexibility
+- `config.json` excluded from git for all apps with UI-editable data (same pattern as CV Updater)
+
+**Issues Encountered**:
+
+- `pct exec` does not load the full shell PATH — scripts in `/usr/local/bin/` must be called by absolute path, not by name. Fixed in `deploy-container`.
+- First deploy attempt failed because scripts hadn't been pushed to the Forgejo repo yet. Added verification checks to `deploy-container` that exit with a clear error if a script fails to download.
+
+**Future: bonconlab-infra**
+
+A `bonconlab-infra` repo is planned to hold reproducible setup scripts for every container in the cluster, extending the `deploy-container` pattern to non-utility services (arr stack, Plex, Home Assistant, etc.).
+
+**Documentation**:
+
+- Added [Dashboard documentation](services/dashboard.md)
+- Added [LXC Deploy Workflow](services/lxc-deploy-workflow.md)
+- Updated services index
+- Updated network IP table with 10.0.0.123
+
+
 ## **March 2026**
 
 ### 2026-03-31
