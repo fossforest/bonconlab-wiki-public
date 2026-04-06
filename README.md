@@ -2,6 +2,8 @@
 
 Personal homelab documentation and wiki.
 
+# Colin had a nice **fart**
+
 ## Overview
 
 BonConLab is a 4-node Proxmox cluster with supporting infrastructure for self-hosting, home automation, and media management. This wiki documents hardware, network topology, services, and operational procedures.
