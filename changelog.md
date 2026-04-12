@@ -3,6 +3,34 @@
 Running log of changes, configurations, and decisions for BonConLab.
 
 ## **April 2026**
+### 2026-04-11
+
+**Deploy Scripts Updated**
+
+- `deploy-container` step 6: static site fallback — repos without `server.js` or `server.py` are now served directly via `tailscale serve --bg --https=443 /opt/<hostname>/` instead of requiring a systemd service
+- Removed `package.json`-only Node.js detection (only `server.js` triggers Node.js mode now)
+- Changed all script install paths from `/usr/local/bin/` to `/usr/bin/` — fixes `command not found` on community-script containers where `/usr/local/bin` isn't in PATH
+- `ts-init`: added `--accept-risk=lose-ssh` and `--accept-routes` flags to skip interactive prompts
+- `ts-init`: added error handling — exits with a diagnostic message if Tailscale install fails (e.g., DNS not working)
+- `quickref`: added self-update — re-downloads itself from Forgejo on each run if a newer version exists
+
+**New Script: wiki-info**
+
+- Lightweight info-gathering script for wiki documentation
+- Run on any container via `curl -fsSL .../wiki-info | bash` — outputs hostname, IPs, Tailscale status, specs, ports, and systemd services
+- Added to quickref menu
+
+**PVE Scripts Local Installed (LXC 116)**
+
+- Web-based management interface for Proxmox VE community helper scripts
+- Deployed on TMG via community helper script, Tailscale added via `ts-init`
+- IP: 10.0.0.152, Tailscale: https://pve-scripts-local.tail-scale.ts.net
+
+**Documentation**:
+- Added [PVE Scripts Local](services/pve-scripts-local.md)
+- Updated [LXC Deploy Workflow](services/lxc-deploy-workflow.md) — /usr/bin paths, static fallback, quickref, wiki-info
+- Updated [Services Index](services/_services-index.md), [Network](network.md)
+
 ### 2026-04-05
 
 **BonConLab Dashboard Deployed**

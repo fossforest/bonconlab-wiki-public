@@ -23,6 +23,8 @@ Two helper scripts do the inside-the-container work. They're not pre-installed a
 | `deploy-container` | Proxmox host | Orchestrates the full container lifecycle |
 | `ts-init` | Inside container | Tailscale + SSH + tag:server + optional extra tags |
 | `svc-init` | Inside container | Systemd service creation (auto-detects Node.js or Python) |
+| `quickref` | Proxmox host | Interactive command reference — self-updates on each run |
+| `wiki-info` | Inside container | Gathers container info for wiki documentation (curl and pipe, no install) |
 
 ## Setup
 
@@ -50,11 +52,11 @@ Run this on each Proxmox node you want to deploy from:
 
 ```bash
 curl -fsSL http://10.0.0.181:3000/anon/bonconlab-scripts/raw/branch/main/deploy-container \
-  -o /usr/local/bin/deploy-container && chmod +x /usr/local/bin/deploy-container
+  -o /usr/bin/deploy-container && chmod +x /usr/bin/deploy-container
 # curl -fsSL — Fetch from Forgejo raw file endpoint silently, fail on errors, follow redirects
 # -o — Write output to this file path instead of stdout
 # && chmod +x — Make executable (only runs if download succeeded)
-# /usr/local/bin/ — On the system PATH, callable as just `deploy-container`
+# /usr/bin/ — On the system PATH, callable as just `deploy-container`
 ```
 
 To update later (e.g., after changing defaults), re-run the same command.
@@ -92,7 +94,7 @@ deploy-container
 3. **Installs base packages** — curl, git, nodejs, npm, webhook, tailscale
 4. **Sets up Tailscale** — curls `ts-init` from Forgejo, authenticates with the permanent OAuth client secret, applies `tag:server` and any additional tags, enables SSH, optionally starts HTTPS serve
 5. **Clones the app repo** from Forgejo into `/opt/<hostname>/`, runs `npm install` if a `package.json` is found
-6. **Creates the systemd service** — curls `svc-init` from Forgejo, auto-detects Node.js or Python from repo contents, prompts for confirmation, starts the service
+6. **Creates the systemd service** — curls `svc-init` from Forgejo, auto-detects Node.js (`server.js`) or Python (`server.py`) from repo contents, prompts for confirmation, starts the service. If neither is found, falls back to serving the directory as a static site via `tailscale serve --bg --https=443`
 
 ### After deploy-container finishes
 
@@ -157,7 +159,7 @@ curl -fsSL https://tailscale.com/install.sh | sh
 
 ```bash
 curl -fsSL http://10.0.0.181:3000/anon/bonconlab-scripts/raw/branch/main/ts-init \
-  -o /usr/local/bin/ts-init && chmod +x /usr/local/bin/ts-init
+  -o /usr/bin/ts-init && chmod +x /usr/bin/ts-init
 # Fetches the latest version from Forgejo (with current OAuth secret)
 
 ts-init 8080
@@ -169,10 +171,18 @@ ts-init 8080
 
 ```bash
 curl -fsSL http://10.0.0.181:3000/anon/bonconlab-scripts/raw/branch/main/svc-init \
-  -o /usr/local/bin/svc-init && chmod +x /usr/local/bin/svc-init
+  -o /usr/bin/svc-init && chmod +x /usr/bin/svc-init
 
 svc-init --name myservice --exec "/usr/bin/node server.js" --port 3000
 # Or just: svc-init (interactive prompts)
+```
+
+**Gather container info for wiki updates:**
+
+```bash
+curl -fsSL http://10.0.0.181:3000/anon/bonconlab-scripts/raw/branch/main/wiki-info | bash
+# No install needed — outputs hostname, IPs, Tailscale status, specs, ports, etc.
+# Copy the output and paste to Claude for wiki documentation
 ```
 
 ## OAuth Client Maintenance
@@ -238,7 +248,7 @@ Re-run the install command:
 
 ```bash
 curl -fsSL http://10.0.0.181:3000/anon/bonconlab-scripts/raw/branch/main/deploy-container \
-  -o /usr/local/bin/deploy-container && chmod +x /usr/local/bin/deploy-container
+  -o /usr/bin/deploy-container && chmod +x /usr/bin/deploy-container
 ```
 
 ### Updating ts-init or svc-init on existing containers
@@ -247,7 +257,7 @@ Only needed if the script logic changes (the OAuth secret doesn't expire, so no 
 
 ```bash
 curl -fsSL http://10.0.0.181:3000/anon/bonconlab-scripts/raw/branch/main/ts-init \
-  -o /usr/local/bin/ts-init && chmod +x /usr/local/bin/ts-init
+  -o /usr/bin/ts-init && chmod +x /usr/bin/ts-init
 ```
 
 ## Future: Infrastructure as Code
