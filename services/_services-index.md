@@ -36,7 +36,7 @@ Index of all services running in BonConLab. Each service has its own documentati
 | qBittorrent | DB (LXC 309) | Container | 8090 | ✅ Active | [qBittorrent](qbittorrent.md) |
 | NAS / Fileserver | DB | Container | — | ✅ Active | [NAS / Fileshare](nas-fileshare.md) |
 | Ollama | Mac Mini M4 | macOS LaunchAgent | 11434 | ✅ Active | [Ollama](ollama.md) |
-| Open WebUI | SB (LXC 204) | Docker in LXC | 3000 | 🔧 Planned | [Open WebUI](open-webui.md) |
+| Open WebUI | SB (LXC 204) | Native (systemd) in LXC | 8080 | ✅ Active | [Open WebUI](open-webui.md) |
 
 ## **Planned Services**
 
@@ -105,6 +105,7 @@ Common issues and fixes.
 * [Actual Budget](actual-budget.md) (LXC 201\)
 * [Paperless-ngx](paperless-ngx.md) (LXC 202\)
 * [Manyfold](manyfold.md) (LXC 203\)
+* [Open WebUI](open-webui.md) (LXC 204)
 
 ### **TMG (tmg)**
 

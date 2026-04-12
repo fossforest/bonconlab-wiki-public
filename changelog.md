@@ -10,7 +10,8 @@ Running log of changes, configurations, and decisions for BonConLab.
 - Configured Ollama (Homebrew) on Mac Mini M4 (10.0.0.148) as the local LLM inference backend
 - Added `OLLAMA_HOST=0.0.0.0` to LaunchAgent for LAN/Tailscale access
 - Pulled `gemma4:e4b` (~4.5B effective, 8B with embeddings) — serves as HA conversation agent and Obsidian assistant
-- Open WebUI planned for SB (LXC 204) as the frontend — will connect to Ollama at 10.0.0.148:11434
+- Open WebUI installed on SB (LXC 204, 10.0.0.126) — native systemd service, Tailscale serve at https://openwebui.tail-scale.ts.net
+- 4 cores, 8GB RAM, 50GB disk, Debian 13 (trixie)
 - HA integration: local gemma4 model as conversation agent (voice/quick Q&A), Claude+MCP for complex tasks (automations, entity management)
 
 **Documentation**:
