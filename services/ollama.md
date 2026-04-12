@@ -1,6 +1,6 @@
 # Ollama
 
-Local LLM inference server running on the Mac Mini M4. Serves as the backend for Open WebUI and Home Assistant voice assistant.
+Local LLM inference server running on the Mac Mini M4. Serves as the backend for Open WebUI (chat/Obsidian) and Home Assistant conversation agent (direct connection).
 
 ## Overview
 
@@ -89,6 +89,16 @@ curl http://localhost:11434/api/tags
 - gemma4:e4b (~8B with embeddings) should use ~5-6GB RAM at Q4_K_M. If memory pressure is high, check if multiple models are loaded: `ollama ps`
 - Unload unused models: `ollama stop <model>`
 
+## Home Assistant Integration
+
+HA connects directly to Ollama (not through Open WebUI) via the **Ollama Conversation** custom integration (HACS):
+
+- **Endpoint**: `http://10.0.0.148:11434`
+- **Model**: gemma4:e4b
+- **Use case**: Voice commands and conversation agent (intent-based, not freeform chat)
+- **Complex tasks** (writing automations, organizing entities): handled separately by Claude Code with the HA MCP server
+
 ## Related
 
-- [Open WebUI](open-webui.md) — frontend that connects to this Ollama instance
+- [Open WebUI](open-webui.md) — chat frontend for browser/Obsidian use
+- [Home Assistant](../home-assistant.md) — conversation agent consumer

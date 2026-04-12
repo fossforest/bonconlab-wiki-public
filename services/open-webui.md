@@ -49,12 +49,9 @@ Added via `ts-init`. Tailscale serve proxies `https://openwebui.tail-scale.ts.ne
 
 Points to the Mac Mini's LAN IP at `http://10.0.0.148:11434`.
 
-### Home Assistant Integration
+### Home Assistant
 
-Two-tier integration:
-
-- **Conversation agent** (local, via Open WebUI): gemma4:e4b serves as the HA conversation agent via the OpenAI-compatible API at `http://10.0.0.126:8080/api/`. Handles voice commands and quick Q&A with low latency.
-- **Complex tasks** (cloud, via Claude MCP): Claude Code with the HA MCP server handles writing automations, organizing entities, and other tasks requiring stronger reasoning.
+HA does **not** route through Open WebUI. See [Ollama](ollama.md) for the direct HA → Ollama conversation agent setup.
 
 ## Maintenance
 
