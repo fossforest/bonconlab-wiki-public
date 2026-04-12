@@ -24,6 +24,7 @@ Index of all services running in BonConLab. Each service has its own documentati
 | IT Tools | TMG (LXC 110\) | Container | — | ✅ Active | [IT Tools](it-tools.md) |
 | Mirror Manager | TMG (LXC 111\) | Container | 3850 | ✅ Active | [Mirror Manager](mirror-manager.md) |
 | CV Updater | TMG (LXC 112\) | Container | 3737 | ✅ Active | [CV Updater](cv-updater.md) |
+| Button Automation Generator | TMG (LXC 116\) | Container | — | ✅ Active | [Button Automation Generator](button-automation-generator.md) |
 | Nebula Sync | TMG (Docker in LXC 103\) | Docker | — | ✅ Active | [Nebula Sync](nebula-sync.md) |
 | PiHole Backup | Pi 3 | Bare metal | 80, 53 | ✅ Active | [PiHole](pihole.md) |
 | Proxmox Backup Server | DB (LXC 301\) | Container | 8007 | ✅ Active | [Proxmox Backup Server](proxmox-backup-server.md) |
@@ -50,7 +51,7 @@ Index of all services running in BonConLab. Each service has its own documentati
 
 | Tool | Location | Purpose | Docs |
 | :---- | :---- | :---- | :---- |
-| Button Automation Generator | http://10.0.0.238/tools/ | Generate YAML templates for HA button automations | [Documentation](button-automation-generator.md) |
+| Button Automation Generator | https://button-automation-generator.tail-scale.ts.net | Generate YAML templates for HA button automations | [Documentation](button-automation-generator.md) |
 | wiki-info | bonconlab-scripts (Forgejo) | Gather container info for wiki documentation | [LXC Deploy Workflow](lxc-deploy-workflow.md) |
 
 ## **Service Documentation Template**
@@ -121,6 +122,7 @@ Common issues and fixes.
 * [IT Tools](it-tools.md) (LXC 110\)
 * [Mirror Manager](mirror-manager.md) (LXC 111\) — webhook listener on port 9000 for GitOps deploys
 * [CV Updater](cv-updater.md) (LXC 112\) — webhook listener on port 9000 for GitOps deploys
+* [Button Automation Generator](button-automation-generator.md) (LXC 116\)
 
 ### **DB (db)**
 

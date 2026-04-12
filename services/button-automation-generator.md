@@ -6,14 +6,18 @@ Local HTML tool for quickly generating Home Assistant button automation YAML tem
 
 | Property | Value |
 |----------|-------|
-| Type | Static HTML page |
-| URL | http://10.0.0.238/tools/ |
-| File Location | `/var/www/html/tools/index.html` (in container) |
+| Node | TMG (LXC 116) |
+| Type | Static HTML (Tailscale Serve) |
+| IP | 10.0.0.131 |
+| Tailscale URL | https://button-automation-generator.tail-scale.ts.net |
+| File Location | `/opt/button-automation-generator/button-automation-generator.html` |
 | Status | ✅ Active |
 
 ## Access
 
-**Web Interface**: http://10.0.0.238/tools/
+**Tailscale**: https://button-automation-generator.tail-scale.ts.net
+
+Accessible from any device on the tailnet. No local HTTP server — the page is served directly by `tailscale serve`.
 
 ## Purpose
 
@@ -30,7 +34,7 @@ This framework keeps all button functionality in a single automation, making it 
 
 ## Usage
 
-1. Open http://10.0.0.238/tools/ in any browser
+1. Open https://button-automation-generator.tail-scale.ts.net in any browser (must be on the tailnet)
 2. (Optional) Enter a name for the button
 3. Paste the device ID
 4. Click "Generate YAML"
@@ -125,26 +129,22 @@ This tool provides the structured starting point of a blueprint while maintainin
 
 ## Updating the Tool
 
-To update the HTML file:
+The app directory is a git repo cloned from Forgejo. To update:
 
 ```bash
-# From TMG host
-pct push 101 /path/to/updated-file.html /var/www/html/tools/index.html
+pct enter 116
+cd /opt/button-automation-generator
+git pull
 ```
 
-Or edit directly in the container:
-
-```bash
-pct enter 101
-nano /var/www/html/tools/index.html
-```
+Changes take effect immediately — Tailscale serve picks up the updated file with no restart needed.
 
 ## Notes
 
-- Accessible from any device on the local network
-- No internet connection required
+- Served via Tailscale serve — accessible from any tailnet device, no local HTTP server required
 - Dark theme matches Home Assistant UI
 - Copy-to-clipboard function for quick workflow
+- 1 core / 512MB RAM / 4GB disk — minimal footprint
 
 ## Related
 

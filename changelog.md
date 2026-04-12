@@ -5,11 +5,18 @@ Running log of changes, configurations, and decisions for BonConLab.
 ## **April 2026**
 ### 2026-04-12
 
-**Removed PVE Scripts Local (LXC 116)**
+**Button Automation Generator — Dedicated Container (LXC 116)**
 
-- Destroyed pve-scripts-local container on TMG — low benefit relative to maintenance overhead
-- Removed from services index, network IP table, and deleted service doc
-- IP 10.0.0.152 freed up; can be redeployed later if needed
+- Redeployed Button Automation Generator as its own LXC container on TMG (LXC 116, 10.0.0.131)
+- Previously hosted on shared container (LXC 101 at 10.0.0.238 via nginx); now served via `tailscale serve` as a static site
+- Tailscale URL: https://button-automation-generator.tail-scale.ts.net
+- 1 core, 512MB RAM, 4GB disk, Debian 13 (trixie)
+- PVE Scripts Local (former occupant of LXC 116) destroyed — no longer needed
+
+**Documentation**:
+- Updated [Button Automation Generator](services/button-automation-generator.md) service doc with new container details
+- Replaced PVE Scripts Local entries in services index, network table, and Services by Node
+- Removed `services/pve-scripts-local.md`
 
 ### 2026-04-11
 

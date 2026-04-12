@@ -21,6 +21,7 @@ Network topology, IP assignments, and device locations for BonConLab.
 | 10.0.0.127 | jellyfin | Jellyfin (LXC 311) | DB |
 | 10.0.0.140 | tmg-mirror-manager | Mirror Manager (LXC 111) | TMG |
 | 10.0.0.148 | boncon-mac-mini-m4 | Mac Mini M4 (Ollama) | Upstairs desk |
+| 10.0.0.131 | button-automation-generator | Button Automation Generator (LXC 116) | TMG |
 | 10.0.0.160 | sb-manyfold | Manyfold (LXC 203) | SB |
 | 10.0.0.192 | sb-actualbudget | Actual Budget (LXC 201) | SB |
 | 10.0.0.194 | db-plex | Plex (LXC 302) | DB |
