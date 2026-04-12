@@ -35,6 +35,8 @@ Index of all services running in BonConLab. Each service has its own documentati
 | Sonarr | DB (LXC 308) | Container | 8989 | ✅ Active | [Sonarr](sonarr.md) |
 | qBittorrent | DB (LXC 309) | Container | 8090 | ✅ Active | [qBittorrent](qbittorrent.md) |
 | NAS / Fileserver | DB | Container | — | ✅ Active | [NAS / Fileshare](nas-fileshare.md) |
+| Ollama | Mac Mini M4 | macOS LaunchAgent | 11434 | ✅ Active | [Ollama](ollama.md) |
+| Open WebUI | SB (LXC 204) | Docker in LXC | 3000 | 🔧 Planned | [Open WebUI](open-webui.md) |
 
 ## **Planned Services**
 
@@ -131,6 +133,10 @@ Common issues and fixes.
 * [Radarr](radarr.md) (LXC 307)
 * [Sonarr](sonarr.md) (LXC 308)
 * [qBittorrent](qbittorrent.md) (LXC 309)   
+
+### **Mac Mini M4**
+
+* [Ollama](ollama.md) — local LLM inference (gemma4:e4b)
 
 ### **Raspberry Pi 3**
 

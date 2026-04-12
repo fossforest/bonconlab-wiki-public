@@ -5,6 +5,18 @@ Running log of changes, configurations, and decisions for BonConLab.
 ## **April 2026**
 ### 2026-04-11
 
+**Local LLM Backend — Ollama on Mac Mini M4**
+
+- Configured Ollama (Homebrew) on Mac Mini M4 (10.0.0.148) as the local LLM inference backend
+- Added `OLLAMA_HOST=0.0.0.0` to LaunchAgent for LAN/Tailscale access
+- Pulled `gemma4:e4b` (~4.5B effective, 8B with embeddings) — serves as HA conversation agent and Obsidian assistant
+- Open WebUI planned for SB (LXC 204) as the frontend — will connect to Ollama at 10.0.0.148:11434
+- HA integration: local gemma4 model as conversation agent (voice/quick Q&A), Claude+MCP for complex tasks (automations, entity management)
+
+**Documentation**:
+- Added [Ollama](services/ollama.md) and [Open WebUI](services/open-webui.md) service docs
+- Added Mac Mini M4 to network.md and services index
+
 **Deploy Scripts Updated**
 
 - `deploy-container` step 6: static site fallback — repos without `server.js` or `server.py` are now served directly via `tailscale serve --bg --https=443 /opt/<hostname>/` instead of requiring a systemd service
