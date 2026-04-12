@@ -34,6 +34,7 @@ Index of all services running in BonConLab. Each service has its own documentati
 | Radarr | DB (LXC 307) | Container | 7878 | ✅ Active | [Radarr](radarr.md) |
 | Sonarr | DB (LXC 308) | Container | 8989 | ✅ Active | [Sonarr](sonarr.md) |
 | qBittorrent | DB (LXC 309) | Container | 8090 | ✅ Active | [qBittorrent](qbittorrent.md) |
+| Jellyfin | DB (LXC 311) | Container | 8096 | ✅ Active | [Jellyfin](jellyfin.md) |
 | NAS / Fileserver | DB | Container | — | ✅ Active | [NAS / Fileshare](nas-fileshare.md) |
 | Ollama | Mac Mini M4 | macOS LaunchAgent | 11434 | ✅ Active | [Ollama](ollama.md) |
 | Open WebUI | SB (LXC 204) | Native (systemd) in LXC | 8080 | ✅ Active | [Open WebUI](open-webui.md) |
@@ -42,7 +43,6 @@ Index of all services running in BonConLab. Each service has its own documentati
 
 | Service | Target Node | Purpose | Priority |
 | :---- | :---- | :---- | :---- |
-| Jellyfin | DB | Media streaming (alternative to Plex) | Low |
 | Syncthing | TBD | File synchronization | Medium |
 | Immich | DB | Photo management | Medium |
 
@@ -133,7 +133,8 @@ Common issues and fixes.
 * [Prowlarr](prowlarr.md) (LXC 306)
 * [Radarr](radarr.md) (LXC 307)
 * [Sonarr](sonarr.md) (LXC 308)
-* [qBittorrent](qbittorrent.md) (LXC 309)   
+* [qBittorrent](qbittorrent.md) (LXC 309)
+* [Jellyfin](jellyfin.md) (LXC 311)
 
 ### **Mac Mini M4**
 

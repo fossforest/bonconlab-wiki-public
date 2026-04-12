@@ -17,7 +17,11 @@ Network topology, IP assignments, and device locations for BonConLab.
 | 10.0.0.4 | db.local | DB (Proxmox) | Homelab closet |
 | 10.0.0.5 | dp.local | DP (Proxmox) | Homelab closet |
 | 10.0.0.10 | pihole-tmg | PiHole Primary (TMG LXC 103) | TMG |
+<<<<<<< Updated upstream
 | 10.0.0.126 | openwebui | Open WebUI (SB LXC 204) | SB |
+=======
+| 10.0.0.127 | jellyfin | Jellyfin (LXC 311) | DB |
+>>>>>>> Stashed changes
 | 10.0.0.140 | tmg-mirror-manager | Mirror Manager (LXC 111) | TMG |
 | 10.0.0.148 | boncon-mac-mini-m4 | Mac Mini M4 (Ollama) | Upstairs desk |
 | 10.0.0.152 | pve-scripts-local | PVE Scripts Local (LXC 116) | TMG |

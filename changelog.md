@@ -5,6 +5,7 @@ Running log of changes, configurations, and decisions for BonConLab.
 ## **April 2026**
 ### 2026-04-11
 
+<<<<<<< Updated upstream
 **Local LLM Backend — Ollama on Mac Mini M4**
 
 - Configured Ollama (Homebrew) on Mac Mini M4 (10.0.0.148) as the local LLM inference backend
@@ -43,6 +44,16 @@ Running log of changes, configurations, and decisions for BonConLab.
 - Added [PVE Scripts Local](services/pve-scripts-local.md)
 - Updated [LXC Deploy Workflow](services/lxc-deploy-workflow.md) — /usr/bin paths, static fallback, quickref, wiki-info
 - Updated [Services Index](services/_services-index.md), [Network](network.md)
+=======
+**Jellyfin Deployed**
+
+- Deployed Jellyfin media server on DB as LXC 311 (10.0.0.127)
+- Ubuntu 24.04 LTS, 2 CPU cores, 2GB RAM
+- Tailscale Serve configured for HTTPS access at https://jellyfin.tail-scale.ts.net
+- Media served from mergerfs virtual pool via bind mount (same pool as Plex)
+- Added [Jellyfin documentation](services/jellyfin.md)
+- Updated services index, network IP table
+>>>>>>> Stashed changes
 
 ### 2026-04-05
 
