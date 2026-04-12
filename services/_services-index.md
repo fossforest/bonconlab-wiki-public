@@ -24,7 +24,6 @@ Index of all services running in BonConLab. Each service has its own documentati
 | IT Tools | TMG (LXC 110\) | Container | — | ✅ Active | [IT Tools](it-tools.md) |
 | Mirror Manager | TMG (LXC 111\) | Container | 3850 | ✅ Active | [Mirror Manager](mirror-manager.md) |
 | CV Updater | TMG (LXC 112\) | Container | 3737 | ✅ Active | [CV Updater](cv-updater.md) |
-| PVE Scripts Local | TMG (LXC 116\) | Container | 3000 | ✅ Active | [PVE Scripts Local](pve-scripts-local.md) |
 | Nebula Sync | TMG (Docker in LXC 103\) | Docker | — | ✅ Active | [Nebula Sync](nebula-sync.md) |
 | PiHole Backup | Pi 3 | Bare metal | 80, 53 | ✅ Active | [PiHole](pihole.md) |
 | Proxmox Backup Server | DB (LXC 301\) | Container | 8007 | ✅ Active | [Proxmox Backup Server](proxmox-backup-server.md) |
@@ -122,7 +121,6 @@ Common issues and fixes.
 * [IT Tools](it-tools.md) (LXC 110\)
 * [Mirror Manager](mirror-manager.md) (LXC 111\) — webhook listener on port 9000 for GitOps deploys
 * [CV Updater](cv-updater.md) (LXC 112\) — webhook listener on port 9000 for GitOps deploys
-* [PVE Scripts Local](pve-scripts-local.md) (LXC 116\)
 
 ### **DB (db)**
 

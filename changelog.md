@@ -3,6 +3,14 @@
 Running log of changes, configurations, and decisions for BonConLab.
 
 ## **April 2026**
+### 2026-04-12
+
+**Removed PVE Scripts Local (LXC 116)**
+
+- Destroyed pve-scripts-local container on TMG — low benefit relative to maintenance overhead
+- Removed from services index, network IP table, and deleted service doc
+- IP 10.0.0.152 freed up; can be redeployed later if needed
+
 ### 2026-04-11
 
 **Jellyfin and Seerr Deployed**
