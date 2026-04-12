@@ -5,6 +5,26 @@ Running log of changes, configurations, and decisions for BonConLab.
 ## **April 2026**
 ### 2026-04-12
 
+**Home Assistant GitOps + Version Control**
+
+- Set up git version control for HAOS `/config` — tracked in Forgejo repo `alex/homeassistant-config`
+- Primary direction: HAOS → Forgejo (safety net/backup). MCP is the primary editing tool, git is the backup
+- Created `ha-git-push` script in bonconlab-scripts: auto-commit + push with self-update, runtime secret fetching, token leak prevention
+- Configured Git pull add-on (`core_git_pull`) for the reverse direction (Forgejo → HAOS pull on webhook)
+- Created two automations:
+  - "GitOps: Pull config on Forgejo push" — webhook trigger, starts Git pull add-on
+  - "GitOps: Nightly auto-commit and push config" — 2 AM daily safety net
+- Added Forgejo webhook on `homeassistant-config` repo → HA webhook endpoint
+- Cleaned up `.gitignore`: excluded databases, .cache/ (500+ brand icons), www/community/, z2m logs/state; kept YAML config, area images, blueprints, scripts
+- Mac clone at `/Users/alex-m4mini/homeassistant-config` for occasional direct edits
+- Connected Claude Code to HA via ha-mcp for direct entity/automation/dashboard management
+
+**Documentation**:
+- Updated [Home Assistant](home-assistant.md) with Version Control, MCP, add-ons sections
+- Updated [Forgejo](services/forgejo.md) with homeassistant-config and bonconlab-scripts repos
+- Created `CLAUDE.md` for bonconlab-scripts repo (script conventions)
+- Updated bonconlab-scripts `README.md` with ha-git-push, quickref, wiki-info
+
 **Button Automation Generator — Dedicated Container (LXC 116)**
 
 - Redeployed Button Automation Generator as its own LXC container on TMG (LXC 116, 10.0.0.131)
@@ -17,6 +37,12 @@ Running log of changes, configurations, and decisions for BonConLab.
 - Updated [Button Automation Generator](services/button-automation-generator.md) service doc with new container details
 - Replaced PVE Scripts Local entries in services index, network table, and Services by Node
 - Removed `services/pve-scripts-local.md`
+
+**Homepage Service Removed**
+
+- Removed Homepage dashboard (LXC 107, 10.0.0.197) — replaced by custom dashboard
+- Removed `homepage-config` repo and its webhook from Forgejo
+- Cleaned up wiki: deleted service doc, removed from services index, network table, and Forgejo references
 
 ### 2026-04-11
 

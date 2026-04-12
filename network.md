@@ -26,7 +26,6 @@ Network topology, IP assignments, and device locations for BonConLab.
 | 10.0.0.192 | sb-actualbudget | Actual Budget (LXC 201) | SB |
 | 10.0.0.194 | db-plex | Plex (LXC 302) | DB |
 | 10.0.0.196 | sb-paperless | Paperless-ngx (LXC 202) | SB |
-| 10.0.0.197 | tmg-homepage | Homepage (LXC 107) | TMG |
 | 10.0.0.179 | rustdeskserver | RustDesk Server (LXC 108) | TMG |
 | 10.0.0.181 | forgejo | Forgejo Git Server (LXC 104) | TMG |
 | 10.0.0.185 | tmg-it-tools-alpine | IT Tools (LXC 110) | TMG |

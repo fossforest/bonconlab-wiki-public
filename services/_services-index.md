@@ -16,7 +16,6 @@ Index of all services running in BonConLab. Each service has its own documentati
 | Tailscale | TMG (LXC 102\) | Container | — | ✅ Active | [Tailscale](tailscale.md) |
 | PiHole Primary | TMG (LXC 103\) | Container | 80, 53 | ✅ Active | [PiHole](pihole.md) |
 | Forgejo | TMG (LXC 104\) | Container | 3000 | ✅ Active | [Forgejo](forgejo.md) |
-| Homepage | TMG (LXC 107\) | Container | 3000 | ✅ Active | [Homepage](homepage.md) |
 | Label Icon Generator | TMG (LXC 105\) | Container | — | ✅ Active | — |
 | APT Cacher NG | TMG (LXC 106\) | Container | — | ✅ Active | — |
 | RustDesk Server | TMG (LXC 108\) | Container | 21114, 21115–21117 | ✅ Active | [RustDesk Server](rustdesk-server.md) |
@@ -52,6 +51,7 @@ Index of all services running in BonConLab. Each service has its own documentati
 | Tool | Location | Purpose | Docs |
 | :---- | :---- | :---- | :---- |
 | Button Automation Generator | https://button-automation-generator.tail-scale.ts.net | Generate YAML templates for HA button automations | [Documentation](button-automation-generator.md) |
+| ha-git-push | bonconlab-scripts (Forgejo) | Commit and push HA config to Forgejo | [Home Assistant](../home-assistant.md) |
 | wiki-info | bonconlab-scripts (Forgejo) | Gather container info for wiki documentation | [LXC Deploy Workflow](lxc-deploy-workflow.md) |
 
 ## **Service Documentation Template**
@@ -116,7 +116,6 @@ Common issues and fixes.
 * [Forgejo](forgejo.md) (LXC 104\)
 * Label Icon Generator (LXC 105\)
 * APT Cacher NG (LXC 106\)
-* [Homepage](homepage.md) (LXC 107\) — webhook listener on port 9000 for GitOps deploys
 * [RustDesk Server](rustdesk-server.md) (LXC 108\)
 * Vaultwarden (LXC 109\)
 * [IT Tools](it-tools.md) (LXC 110\)

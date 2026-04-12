@@ -36,7 +36,8 @@ Both repositories are public on this instance. Access control relies on network-
 | Repository | Description | Migrated From |
 |------------|-------------|---------------|
 | bonconlab-wiki | Homelab documentation | GitHub (anon-user/bonconlab-wiki) |
-| homepage-config | Homepage dashboard YAML configs | GitHub (anon-user/homepage-config) |
+| bonconlab-scripts | Shared provisioning and utility scripts (contains secrets — **not mirrored to GitHub**) | — (new) |
+| homeassistant-config | HA config version control and backup | — (new, pushed from HAOS) |
 | forgejo-mirror-manager | Mirror manager web app | — (new) |
 | cv-updater | CV editing and .docx generation | GitHub (secondary remote retained) |
 
@@ -64,25 +65,6 @@ Restart Forgejo after editing app.ini:
 ```bash
 systemctl restart forgejo
 ```
-
-### homepage-config webhook
-
-The `homepage-config` repo has a push-event webhook that triggers a deploy on LXC 107 (Homepage):
-
-| Setting | Value |
-|---------|-------|
-| Payload URL | http://10.0.0.197:9000/hooks/homepage-deploy |
-| Content type | application/json |
-| Events | Push |
-
-**Webhook receiver on LXC 107 (Homepage)**:
-- Package: `webhook` (installed via `apt`)
-- Config: `/etc/webhook.conf`
-- Listening port: 9000 (all interfaces)
-- Deploy script: `/opt/homepage-config/pull-and-deploy.sh`
-  - Runs `git pull` on the homepage-config repo
-  - Copies the four YAML config files to `/opt/homepage/config/`
-  - Homepage hot-reloads config changes — no restart needed
 
 ## Installation
 
@@ -162,7 +144,7 @@ pct enter 104
 
 ## Related
 
-- [Homepage](homepage.md) (webhook consumer — LXC 107)
+- [Home Assistant](../home-assistant.md) (webhook consumer — GitOps config pull)
 - [Mirror Manager](mirror-manager.md) (webhook consumer — LXC 111)
 - [CV Updater](cv-updater.md) (webhook consumer — LXC 112)
 - [Tailscale](tailscale.md)
