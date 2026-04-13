@@ -8,7 +8,7 @@ Home automation hub for BonConLab. Runs as a Proxmox VM on DP with Zigbee as the
 |----------|-------|
 | Host | DP (Proxmox node, 10.0.0.5) |
 | Install Type | Home Assistant OS (Proxmox VM, ID 401) |
-| IP | DHCP (homeassistant.local) |
+| IP | 10.0.0.159 (homeassistant.local) |
 | Port | 8123 |
 | Status | Active |
 
@@ -111,7 +111,7 @@ Two directions:
 | Git pull add-on (`core_git_pull`) | Pulls from Forgejo, validates config, restarts HA if valid. Webhook-triggered (no polling) |
 | Automation: "GitOps: Pull config on Forgejo push" | Webhook trigger (`forgejo_git_pull`, local_only). Starts the Git pull add-on |
 | Automation: "GitOps: Nightly auto-commit and push config" | 2 AM daily. Calls `shell_command.git_commit_and_push` |
-| Forgejo webhook | On `homeassistant-config` push, POSTs to `http://homeassistant.local:8123/api/webhook/forgejo_git_pull` |
+| Forgejo webhook | On `homeassistant-config` push, POSTs to `http://10.0.0.159:8123/api/webhook/forgejo_git_pull` |
 
 ### Manual snapshot workflow
 
