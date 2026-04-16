@@ -124,4 +124,5 @@ The external drives (WD Elements 18TB, WD40EDAZ 4TB) use Shingled Magnetic Recor
 
 * \[x\] Set up automated backup jobs (Completed via PBS 2026-01-30)  
 * \[ \] Configure nas-fileserver container for SMB sharing of external drives  
-* \[ \] Setup Plex/Jellyfin with iGPU passthrough on DB
+* \[ \] Setup Plex/Jellyfin with iGPU passthrough on DB  
+* \[ \] Migrate external USB HDDs to internal SATA (via Glotrends PCIe card) — **deferred 2026-04-16**. Evaluated and declined: boot-race already solved via `nofail` + `x-systemd.requires=` (2026-03-19); no throughput or SMART gain that matters for SMR media; OptiPlex 7060 SFF has no free 3.5" bay. Revisit if DB moves to a chassis with proper drive bays, or if the USB enclosure starts misbehaving.
