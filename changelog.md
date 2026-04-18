@@ -3,6 +3,20 @@
 Running log of changes, configurations, and decisions for BonConLab.
 
 ## **April 2026**
+### 2026-04-17
+
+**Karakeep Deployed**
+
+- Deployed Karakeep (self-hosted bookmark/archive manager, formerly Hoarder) on SB as LXC 205 (10.0.0.134)
+- Debian 13 (trixie), 2 CPU cores, 4GB RAM, 20GB disk, storage on sb-1tb-ssd
+- Installed natively from source at `/opt/karakeep`; runs as four systemd services: `karakeep-web` (Next.js, port 3000), `karakeep-workers` (Python), `karakeep-browser` (headless Chromium, 9222), `meilisearch` (7700)
+- Tailscale Serve at https://karakeep.tail-scale.ts.net → `http://127.0.0.1:3000`
+- AI tagging/summarization can point at Ollama on the Mac Mini as the OpenAI-compatible backend
+
+**Documentation**:
+- Added [Karakeep](services/karakeep.md) service doc
+- Updated services index, Services by Node (SB), and network IP table
+
 ### 2026-04-12
 
 **Home Assistant GitOps + Version Control**

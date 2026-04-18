@@ -38,6 +38,7 @@ Index of all services running in BonConLab. Each service has its own documentati
 | NAS / Fileserver | DB | Container | — | ✅ Active | [NAS / Fileshare](nas-fileshare.md) |
 | Ollama | Mac Mini M4 | macOS LaunchAgent | 11434 | ✅ Active | [Ollama](ollama.md) |
 | Open WebUI | SB (LXC 204) | Native (systemd) in LXC | 8080 | ✅ Active | [Open WebUI](open-webui.md) |
+| Karakeep | SB (LXC 205) | Native (systemd) in LXC | 3000 | ✅ Active | [Karakeep](karakeep.md) |
 
 ## **Planned Services**
 
@@ -107,6 +108,7 @@ Common issues and fixes.
 * [Paperless-ngx](paperless-ngx.md) (LXC 202\)
 * [Manyfold](manyfold.md) (LXC 203\)
 * [Open WebUI](open-webui.md) (LXC 204)
+* [Karakeep](karakeep.md) (LXC 205)
 
 ### **TMG (tmg)**
 
