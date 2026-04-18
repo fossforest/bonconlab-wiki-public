@@ -3,6 +3,19 @@
 Running log of changes, configurations, and decisions for BonConLab.
 
 ## **April 2026**
+### 2026-04-18
+
+**Karakeep — Ollama Integration for Auto-Tagging + Summarization**
+
+- Wired Karakeep's inference pipeline to Ollama on the Mac Mini (10.0.0.148:11434) using `gemma4:e4b` for both text tagging and multimodal image tagging
+- Configured `/etc/karakeep/karakeep.env` (community-script env file path — not `/opt/karakeep/.env`) with `OLLAMA_BASE_URL`, model selection, context length (8192), output cap (2048), inference timeouts (180s job / 600s fetch), and `OLLAMA_KEEP_ALIVE=30m` to keep the model resident between bookmarks
+- Bumped `CRAWLER_JOB_TIMEOUT_SEC=180` — default 60s was tripping on pages with slow archive steps, and each retry re-ran inference, producing duplicate tag/summary jobs
+- Measured performance: tags land in ~5–6s, summaries in ~25–35s per bookmark; acceptable since tagging runs async in the worker queue
+
+**Documentation**:
+- Added "AI / Ollama Integration" section to [Karakeep](services/karakeep.md) with the full env var block, expected performance, smoke test, and new troubleshooting entries for crawler timeouts and missing AI tags
+- Corrected env file path from `/opt/karakeep/.env` (upstream) to `/etc/karakeep/karakeep.env` (community script)
+
 ### 2026-04-17
 
 **Karakeep Deployed**
