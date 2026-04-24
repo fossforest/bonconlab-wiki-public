@@ -1,12 +1,7 @@
 # BonConLab
 
 Personal homelab documentation and wiki.
-<<<<<<< Updated upstream
 
-# HELLO TO ETTIE 
-
-=======
->>>>>>> Stashed changes
 ## Overview
 
 BonConLab is a 4-node Proxmox cluster with supporting infrastructure for self-hosting, home automation, and media management. This wiki documents hardware, network topology, services, and operational procedures.
@@ -24,6 +19,12 @@ BonConLab is a 4-node Proxmox cluster with supporting infrastructure for self-ho
 ### Tools
 
 - [Button Automation Generator](services/button-automation-generator.md) - Generate YAML templates for HA button automations
+
+### Claude Tooling
+
+- [Claude Setup](claude/claude-setup.md) - Shared MCP configuration for Claude Desktop + Code across both Macs
+- [claude-sync](claude/claude-sync.md) - Render + bootstrap script for MCP configs
+- [MCP Servers](claude/mcp-servers.md) - Per-MCP reference (home-assistant, forgejo, irs-taxpayer, proxmox)
 
 ## Infrastructure Summary
 
@@ -61,7 +62,5 @@ BonConLab is a 4-node Proxmox cluster with supporting infrastructure for self-ho
 - **DP Proxmox**: https://10.0.0.5:8006
 - **Home Assistant**: http://homeassistant.local:8123 (VM 401 on DP)
 - **Unifi Controller**: https://10.0.0.250:8443
-- **Nginx Proxy Manager**: http://10.0.0.238:81
-- **Local Tools**: http://10.0.0.238/tools/
 - **PiHole Primary**: http://10.0.0.10/admin
 - **PiHole Backup**: http://10.0.0.229/admin

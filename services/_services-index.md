@@ -55,6 +55,16 @@ Index of all services running in BonConLab. Each service has its own documentati
 | ha-git-push | bonconlab-scripts (Forgejo) | Commit and push HA config to Forgejo | [Home Assistant](../home-assistant.md) |
 | wiki-info | bonconlab-scripts (Forgejo) | Gather container info for wiki documentation | [LXC Deploy Workflow](lxc-deploy-workflow.md) |
 
+## **Workstation Tools**
+
+Tools running on the Mac Mini M4 and MacBook Pro — not services in the node-bound sense, but part of BonConLab infrastructure.
+
+| Tool | Purpose | Docs |
+| :---- | :---- | :---- |
+| claude-config | Shared MCP configuration for Claude Desktop + Code across both Macs | [Claude Setup](../claude/claude-setup.md) |
+| claude-sync | Renders MCP templates, bootstraps runtime dependencies | [claude-sync](../claude/claude-sync.md) |
+| add-mcp skill | Adds new MCPs to the claude-config repo without exposing `.env` to the LLM | [claude-sync](../claude/claude-sync.md) |
+
 ## **Service Documentation Template**
 
 When adding a new service, create a file in /services/ using this template:

@@ -40,6 +40,7 @@ Both repositories are public on this instance. Access control relies on network-
 | homeassistant-config | HA config version control and backup | — (new, pushed from HAOS) |
 | forgejo-mirror-manager | Mirror manager web app | — (new) |
 | cv-updater | CV editing and .docx generation | GitHub (secondary remote retained) |
+| claude-config | Shared Claude Desktop + Claude Code MCP configuration across both Macs (contains MCP tokens in `.env` — **not mirrored to GitHub**) | — (new) |
 
 ### Migration
 

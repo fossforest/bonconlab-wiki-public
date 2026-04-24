@@ -3,6 +3,47 @@
 Running log of changes, configurations, and decisions for BonConLab.
 
 ## **April 2026**
+### 2026-04-23
+
+**Claude Tooling Infrastructure: claude-config repo, claude-sync, and Proxmox MCP**
+
+- **claude-config repo created** on Forgejo (`alex/claude-config`) as the single source of truth for Claude Desktop + Claude Code MCP configuration across the Mac Mini M4 and MacBook Pro
+  - Layout: `desktop.template.json`, `code.template.json`, `proxmox-config.template.json`, `.env`, `.env.example`, `claude-sync` (render + bootstrap script), `.claude/settings.json` (tool-layer deny rule on `.env`), `.claude/skills/add-mcp/SKILL.md`
+  - `.env` is committed intentionally — the repo is Forgejo-only (LAN + Tailscale, never mirrored to GitHub) so the two Macs stay in sync without a separate secret channel
+  - Security model: (1) Claude Code `Read`/`Write`/`Edit` denied for `.env` and `.env.*` at the tool layer — Claude physically cannot touch these files regardless of intent; (2) network isolation — Forgejo is not internet-exposed; (3) each MCP gets a purpose-scoped token
+- **claude-sync script** (`~/claude-config/claude-sync`) — renders templates into the real configs Claude Desktop and Claude Code read, and bootstraps any missing runtime prerequisites
+  - Install patterns covered: Homebrew (`jq`, `node`, `uv`, `go`, `docker`), `go install` from source (forgejo-mcp), Python venv install from source (ProxmoxMCP-Plus: `git clone` → `uv venv` → `uv pip install -e .`)
+  - Between `npx`, `uvx`, `go install`, `docker run`, and Python-venv installs, this covers the vast majority of MCP install patterns without per-MCP manual setup
+  - Config-file rendering extension added for MCPs that need a secondary config file on disk instead of env vars — `proxmox-config.template.json` is rendered to `~/.local/share/ProxmoxMCP-Plus/proxmox-config/config.json` with `chmod 600` alongside the MCP client configs
+  - Template sanity check walks every MCP `command` field and warns if the binary isn't resolvable on PATH; reads templates only (no rendered-config secrets)
+  - `claude-sync --audit` reports drift between rendered configs and templates without bootstrapping or overwriting anything
+- **add-mcp skill patched** (at `~/claude-config/.claude/skills/add-mcp/SKILL.md`, symlinked to `~/.claude/skills/`) with two new guidance blocks:
+  1. Python-venv install pattern — decision tree previously only covered system Python; new row walks Claude through treating a venv's `.venv/bin/python` as the binary (placeholder + `resolve_cmd` + sed line + bootstrap branch)
+  2. Config-file-vs-env-var guidance — when an MCP supports both, prefer env vars; only fall back to a secondary config template when env vars aren't available. Cross-references `proxmox-config.template.json` as the reference implementation
+- **ProxmoxMCP-Plus installed** ([`RekklesNA/ProxmoxMCP-Plus`](https://github.com/RekklesNA/ProxmoxMCP-Plus)) with scoped Proxmox-side permissions
+  - Dedicated user `mcp@pve` (pve realm — no shell access) with custom role `MCPUser` granted on path `/` with propagate on
+  - `MCPUser` role includes: `Datastore.Audit`, `Mapping.Audit`, `Pool.Audit`, `SDN.Audit`, `Sys.Audit`, `VM.Audit`, `VM.GuestAgent.Audit`, `Sys.Syslog`, `VM.PowerMgmt`, `VM.Backup`, `VM.Snapshot`, `VM.Snapshot.Rollback`
+  - Deliberately excluded: `VM.Allocate`, `VM.Clone`, `VM.Config.*`, `VM.Migrate`, `VM.Console`, `Sys.PowerMgmt`, `Sys.Modify`, and everything in the `SDN.*`/`Mapping.*`/`Realm.*`/`User.*`/`Group.*`/`Permissions.*` namespaces — net effect: read-only audit across the cluster, ability to power-cycle/snapshot/back up guests, no create/delete/reconfigure, no arbitrary command execution inside guests (no `VM.Console` neutralizes the guest-agent command-exec path), no access to Proxmox hosts themselves
+  - Pool `mcp-managed` created but unused — see Decisions below
+  - API token `mcp@pve!mcp-claude` with **Privilege Separation unchecked** (the #1 Proxmox API gotcha — with Privilege Separation checked, the token has no privileges unless you also grant the role to the token itself)
+- **Endpoint**: Proxmox MCP connects via `https://sb.tail-scale.ts.net` (port 443) — Tailscale Serve on SB proxies that name to `localhost:8006` internally and terminates TLS with a real Let's Encrypt cert, so `verify_ssl: true` works without importing a custom CA
+- **Container command execution left disabled** — `proxmox-config.template.json` has no `ssh` block and `command_policy.mode` is `deny_all` with empty `allow_patterns`. Upgrade path documented: add `ssh` block + safe `allow_patterns` when a specific need arises
+
+**Decisions made**:
+
+- **Role-only scoping over path+role scoping (pool `mcp-managed` created but unused).** The original plan was to grant `MCPUser` only on pool `mcp-managed` with a curated guest list. Rejected because: (1) the role is already tight enough that cluster-wide (`/`) grants are safe — there's no destructive privilege to scope away; (2) pool scoping would blind the MCP to infrastructure it needs to reason about (PiHole, Forgejo, Karakeep, storage inventories, etc.) without adding meaningful protection. Pool kept as a future option if a narrower token ever makes sense.
+- **Write access over read-only.** Considered a pure audit-only role. Chose to include `VM.PowerMgmt` + `VM.Backup` + `VM.Snapshot` + `VM.Snapshot.Rollback` because the force-multiplier of being able to actually *act* on guests during troubleshooting outweighs the marginal safety of read-only when the role is already scoped tight. The destructive-adjacent privileges (`VM.Allocate`, `VM.Config.*`, `VM.Console`, `Sys.PowerMgmt`, `Sys.Modify`) stay out.
+- **MCPB bundles deferred.** The current build-from-source + `uv venv` approach is working and understood end-to-end. Revisit if running a single long-lived MCP instance on the Mac mini for shared Desktop + Code use becomes worthwhile (e.g., moving `forgejo-mcp` from stdio to `--transport http`).
+
+**Documentation**:
+
+- Added [Claude Setup](claude/claude-setup.md) — high-level overview of the tool surfaces, the `claude-config` repo, and the three-layer security model
+- Added [claude-sync](claude/claude-sync.md) — render + bootstrap script reference with install patterns, sanity check, `--audit`, the add-mcp skill, and troubleshooting
+- Added [MCP Servers](claude/mcp-servers.md) — per-MCP reference with the full Proxmox permissions writeup (role, grants, token, upgrade path for container commands)
+- Updated [Services Index](services/_services-index.md) with a new "Workstation Tools" section
+- Updated [Forgejo](services/forgejo.md) hosted repositories table with `claude-config`
+- Updated [README](README.md) Quick Links with a "Claude Tooling" subheader; also cleaned up leftover merge-conflict markers and removed the stale Nginx Proxy Manager / Local Tools Web UI entries
+
 ### 2026-04-18
 
 **Karakeep — Ollama Integration for Auto-Tagging + Summarization**
