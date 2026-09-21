@@ -6,11 +6,11 @@
 //  Set  part = "base" / "lid" / "both"  then F6 + export STL.
 //
 //  BEFORE PRINTING: measure your cord OD with calipers and set cord_od.
-//  10/4 STW is usually 14.5–16 mm; this file defaults to 15.5.
+//  10/4 STW is usually 14.5–18 mm; this file is set to 18.0 (measured).
 // =====================================================================
 
 /* [Cord] */
-cord_od     = 15.5;   // <-- measure yours
+cord_od     = 18.0;   // measured with calipers (10/4 STW, 5 mm conductors)
 cord_clear  = 0.6;    // extra on slot width
 
 /* [WAGO 221-612 (datasheet: 16 W x 21.1 D x 10.1 H)] */
@@ -26,7 +26,7 @@ fence_t  = 1.2;
 /* [Box] */
 wall      = 2.4;
 floor_t   = 2.0;
-inner_h   = 25;    // interior height
+inner_h   = 28;    // interior height (>= cord_od + saddle_h + ~5 so the lid tab stays > 2 mm)
 lid_t     = 2.5;
 lip_t     = 1.6;
 lip_h     = 2.0;
