@@ -28,7 +28,7 @@ fence_t  = 1.2;
 /* [Box] */
 wall      = 2.4;
 floor_t   = 2.0;
-inner_h   = 28;    // interior height (>= cord_od + saddle_h + ~5 so the lid tab stays > 2 mm)
+inner_h   = 30;    // interior height (>= cord_od + saddle_h + ~5 so the lid tab stays > 2 mm)
 lid_t     = 2.5;
 lip_t     = 1.6;
 lip_h     = 2.0;
@@ -38,11 +38,11 @@ front_ch  = 16;    // wire channel in front of WAGO entry faces
 back_gap  = 3;
 
 /* [Strain relief — zip-tie saddle] */
-saddle_h = 5;
+saddle_h = 7;      // must clear tie_z + tie_h + tie_w/2 (peaked roof) by >= 1.2
 saddle_x = 10;
-tie_w    = 6;      // zip-tie tunnel width
-tie_h    = 2.2;    // zip-tie tunnel height
-tie_z    = 1.0;    // tunnel floor above saddle base
+tie_w    = 5.5;    // zip-tie tunnel width (fits a 4.8 mm tie)
+tie_h    = 2.0;    // tunnel height at the straight walls; a 45 deg peak sits on top (no bridge)
+tie_z    = 0.8;    // tunnel floor above saddle base
 
 /* [Fastening] */
 fastening = "snap"; // ["snap","screws"]
@@ -96,11 +96,15 @@ module cord_slot() {                    // U-slot, open to the top
 }
 
 module saddle(x0) {
-    // block with a Y-axis tunnel under the deck for a zip tie
+    // block with a Y-axis tunnel under the deck for a zip tie;
+    // tunnel has a 45 deg peaked roof so it prints with no bridge
     sw = cord_od + 4;
+    tx = (saddle_x - tie_w)/2;
     translate([x0, cord_y - sw/2, floor_t]) difference() {
         cube([saddle_x, sw, saddle_h]);
-        translate([(saddle_x-tie_w)/2, -1, tie_z]) cube([tie_w, sw+2, tie_h]);
+        translate([0, sw+1, 0]) rotate([90,0,0]) linear_extrude(sw+2)
+            polygon([[tx, tie_z], [tx+tie_w, tie_z], [tx+tie_w, tie_z+tie_h],
+                     [tx+tie_w/2, tie_z+tie_h+tie_w/2], [tx, tie_z+tie_h]]);
     }
 }
 
